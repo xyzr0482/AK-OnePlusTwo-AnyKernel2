@@ -49,6 +49,9 @@ ifelse(file_getprop("/tmp/anykernel/anykernel.sh", "do.cleanup") == 1,
   (delete_recursive("/tmp/anykernel");
   )
 );
+delete("/system/etc/init.d/01mpdecision");
+delete("/system/etc/init.d/00tgm");
+delete("/system/etc/init.d/00RenderKernel");
 unmount("/system");
 ui_print(" ");
 ui_print("Done!");
