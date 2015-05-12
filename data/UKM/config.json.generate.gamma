@@ -2,23 +2,45 @@ cat << CTAG
 {
 	name:GAMMA,
 		elements:[
+		{ SPane:{
+			title:"Gamma Profiles"
+		}},
+			{ SOptionList:{
+				description:"Choose the gamma profile you want to apply and confirm it.",
+				action:"restorebackup pickconfig",
+				default:"None",
+				values:[ "None",
+					`for BAK in \`$UKM/actions/restorebackup listconfig\`; do
+						echo "\"$BAK\","
+					done`
+				],
+				notify:[
+					{
+						on:APPLY,
+						do:[ REFRESH, APPLY ],
+						to:"generic $UKM/files/bck_prof"
+					}
+				]
+			}},
+			{ SDescription:{
+				description:"Click on button below for import the gamma then close/open synapse. After this you have to press the X button on top to load the new settings."
+			}},
+			{ SButton:{
+				label:"Import Selected Profile",
+				action:"sqlite ImportConfigSynapse",
+				notify:[
+					{
+						on:APPLY,
+						do:[ REFRESH, APPLY ],
+						to:"restorebackup pickconfig"
+					}
+				]
+			}},
 			`if [ -d "/sys/devices/platform/kcal_ctrl.0" ]; then
-				if [ -f "/sys/devices/platform/kcal_ctrl.0/kcal_enable" ]; then
-				KCALE=\`$BB cat /sys/devices/platform/kcal_ctrl.0/kcal_enable\`;
-					$BB echo '{ SPane:{
-						title:"KCAL",
-					}},
-						{ SCheckBox:{
-							label:"Enable",
-							description:"Enables/Disables RGB Multiplier Control",
-							default:'$KCALE',
-							action:"gamma /sys/devices/platform/kcal_ctrl.0/kcal_enable",
-						}},'
-				fi
 				if [ -f "/sys/devices/platform/kcal_ctrl.0/kcal" ]; then
 				KCAL=\`$BB cat /sys/devices/platform/kcal_ctrl.0/kcal\`;
 					$BB echo '{ SPane:{
-						title:"Values",
+						title:"Gamma Settings",
 					}},
 						{ SGeneric:{
 							title:"KCAL",

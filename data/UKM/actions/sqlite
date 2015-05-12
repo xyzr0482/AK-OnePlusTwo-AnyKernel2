@@ -6,7 +6,7 @@ SYNAPSE_SD_DIR=/sdcard/Synapse;
 SYNAPSE_CONFIG_DIR=$SYNAPSE_SD_DIR/saved_configs;
 SYNAPSE_DATA=/data/data/com.af.synapse/databases;
 DISABLED_SETTINGS="'buildprop net.hostname', 'buildprop service.adb.tcp.port', 'devtools selinux', 'generic /data/UKM/files/bck_prof', 'sqlite PreferredNetworkMode'";
-DISABLED_ACTIONS="AND key NOT LIKE 'cpuvolt%' AND key NOT LIKE 'gamma%' AND key NOT LIKE 'restorebackup%' AND key NOT LIKE 'soundfaux%' AND key NOT LIKE 'speakerfaux%' AND key NOT LIKE 'voltage%'";
+DISABLED_ACTIONS="AND key NOT LIKE 'cpuvolt%' AND key NOT LIKE 'restorebackup%' AND key NOT LIKE 'soundfaux%' AND key NOT LIKE 'speakerfaux%' AND key NOT LIKE 'voltage%'";
 
 case "$1" in
 	ExportConfigSynapse)
@@ -37,7 +37,7 @@ EOF
 			$SQL3 actionValueStore "UPDATE action_value SET value = (SELECT T1.value FROM my_action_value T1 WHERE T1.key = action_value.key) WHERE key NOT IN ($DISABLED_SETTINGS) $DISABLED_ACTIONS AND value <> (SELECT T1.value FROM my_action_value T1 WHERE T1.key = action_value.key)";
 			$SQL3 actionValueStore "DROP TABLE my_action_value";
 			$BB echo "None" > $SYNAPSE_CONFIG_DIR/.selected_config_profile;
-			$BB echo "$SYNAPSE_CONFIG imported $ROWS row(s). Press the Restart Synapse button below to see updated list.";
+			$BB echo "$SYNAPSE_CONFIG imported $ROWS row(s).";
 		elif [ "$SYNAPSE_CONFIG" == "None" ]; then
 				$BB echo "None selected.";
 		else
