@@ -7,10 +7,10 @@ cat << CTAG
 		}},
 			{ SOptionList:{
 				description:"Choose the gamma profile you want to apply and confirm it.",
-				action:"restorebackup pickconfig",
+				action:"restorebackup pickgammaconfig",
 				default:"None",
 				values:[ "None",
-					`for BAK in \`$UKM/actions/restorebackup listconfig\`; do
+					`for BAK in \`$UKM/actions/restorebackup listgammaconfig\`; do
 						echo "\"$BAK\","
 					done`
 				],
@@ -27,12 +27,12 @@ cat << CTAG
 			}},
 			{ SButton:{
 				label:"Import Selected Profile",
-				action:"sqlite ImportConfigSynapse",
+				action:"sqlite ImportGammaSynapse",
 				notify:[
 					{
 						on:APPLY,
 						do:[ REFRESH, APPLY ],
-						to:"restorebackup pickconfig"
+						to:"restorebackup pickgammaconfig"
 					}
 				]
 			}},
