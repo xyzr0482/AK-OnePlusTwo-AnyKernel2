@@ -369,4 +369,13 @@ case "$1" in
 		LiveInfoCurrent)
 			$BB echo "Version: 3.8.2.2 Special Edition"
 	;;
+		LiveBrickedHotplug)
+			$BB echo "Bricked Hotplug Driver"
+	;;
+		LiveIntellidHotplug)
+			$BB echo "Intelli Hotplug Driver"
+	;;
+		LivedMsmHotplug)
+			$BB echo "Msm Hotplug Driver"
+	;;
 esac;
