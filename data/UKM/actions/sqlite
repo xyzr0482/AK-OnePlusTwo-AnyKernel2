@@ -6,8 +6,8 @@ SYNAPSE_SD_DIR=/sdcard/Synapse;
 SYNAPSE_CONFIG_DIR=$SYNAPSE_SD_DIR/saved_configs;
 SYNAPSE_GAMMAOPO_DIR=$SYNAPSE_SD_DIR/gamma_ak;
 SYNAPSE_DATA=/data/data/com.af.synapse/databases;
-DISABLED_SETTINGS="'buildprop net.hostname', 'buildprop service.adb.tcp.port', 'devtools selinux', 'generic /data/UKM/files/bck_prof', 'sqlite PreferredNetworkMode'";
-DISABLED_ACTIONS="AND key NOT LIKE 'cpuvolt%' AND key NOT LIKE 'restorebackup%' AND key NOT LIKE 'soundfaux%' AND key NOT LIKE 'speakerfaux%' AND key NOT LIKE 'voltage%'";
+DISABLED_SETTINGS="'devtools selinux', 'generic /data/UKM/files/bck_prof'";
+DISABLED_ACTIONS="AND key NOT LIKE 'cpuvolt%' AND key NOT LIKE 'restorebackup%' AND key NOT LIKE 'voltage%'";
 
 case "$1" in
 	ExportConfigSynapse)
@@ -66,18 +66,5 @@ EOF
 		else
 			$BB echo "File not found.";
 		fi;
-	;;
-	PreferredNetworkMode)
-		DB=/data/data/com.android.providers.settings/databases;
-		cd $DB;
-
-		if [[ ! -z $2 ]]; then
-			$SQL3 settings.db "INSERT INTO global VALUES(null, 'preferred_network_mode', $2);" 2> /dev/null;
-			#$SQL3 settings.db "UPDATE global/secure SET value = $2 WHERE name = 'preferred_network_mode';";
-			$BB killall com.android.phone
-		fi;
-
-		VALUE=`$SQL3 settings.db "SELECT value FROM global WHERE name = 'preferred_network_mode';" 2> /dev/null`;
-		if [[ ! -z $VALUE ]]; then $BB echo $VALUE; else $BB echo "0"; fi;
 	;;
 esac;
