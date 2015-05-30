@@ -27,14 +27,10 @@ cat << CTAG
 			$BB echo ','
 			. $UKM/config.json.generate.gpu
 			$BB echo ','
-			if [ -f "/sys/devices/platform/kcal_ctrl.0/kcal" ]; then
-				. $UKM/config.json.generate.gamma
+			. $UKM/config.json.generate.gamma
 			$BB echo ','
-			fi
-			if [ -d "/sys/class/misc/soundcontrol" ]; then
-				. $UKM/config.json.generate.sound
+			. $UKM/config.json.generate.sound
 			$BB echo ','
-			fi
 			. $UKM/config.json.generate.mem
 			$BB echo ','
 			. $UKM/config.json.generate.wake
