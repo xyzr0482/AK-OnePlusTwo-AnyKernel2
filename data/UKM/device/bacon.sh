@@ -400,7 +400,7 @@ case "$1" in
 			$BB echo "`$BB uname -r`"
 	;;
 		LiveInfoCurrent)
-			$BB echo "Version: 3.8.3.3 Special Edition"
+			$BB echo "Version: 3.8.3.4 Special Edition"
 	;;
 		LiveBrickedHotplug)
 			$BB echo "Bricked Hotplug Driver"
