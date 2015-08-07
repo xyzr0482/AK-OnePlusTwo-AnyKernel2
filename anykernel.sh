@@ -179,18 +179,18 @@ replace_line init.qcom-common.rc "write /sys/block/mmcblk0/bdi/read_ahead_kb 512
 replace_line init.qcom-common.rc "write /sys/block/mmcblk0/bdi/read_ahead_kb 1536" "    write /sys/block/mmcblk0/bdi/read_ahead_kb 512";
 
 # interactive tunables
-replace_line init.qcom-common.rc "write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 90" "    write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 70";
+#replace_line init.qcom-common.rc "write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 90" "    write /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load 70";
 replace_line init.qcom-common.rc "write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1190400" "    write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1728000";
 replace_line init.qcom-common.rc "write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1497600" "    write /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq 1728000";
 
 # cpu-boost tunables
 #replace_line init.qcom-common.rc "write /sys/module/cpu_boost/parameters/boost_ms 20" "    write /sys/module/cpu_boost/parameters/boost_ms 60";
-replace_line init.qcom-common.rc "write /sys/module/cpu_boost/parameters/sync_threshold 1728000" "    write /sys/module/cpu_boost/parameters/sync_threshold 1958400";
-replace_line init.qcom-common.rc "write /sys/module/cpu_boost/parameters/input_boost_freq 1497600" "    write /sys/module/cpu_boost/parameters/input_boost_freq 1728000";
+#replace_line init.qcom-common.rc "write /sys/module/cpu_boost/parameters/sync_threshold 1728000" "    write /sys/module/cpu_boost/parameters/sync_threshold 1958400";
+#replace_line init.qcom-common.rc "write /sys/module/cpu_boost/parameters/input_boost_freq 1497600" "    write /sys/module/cpu_boost/parameters/input_boost_freq 1728000";
 #replace_line init.qcom-common.rc "write /sys/module/cpu_boost/parameters/input_boost_ms 40" "    write /sys/module/cpu_boost/parameters/input_boost_ms 100";
 
 # panel and gamma
-replace_line init.qcom-common.rc "chown system graphics /sys/devices/virtual/graphics/fb0/panel_calibration" "    chown system system /sys/devices/virtual/graphics/fb0/panel_calibration";
+#replace_line init.qcom-common.rc "chown system graphics /sys/devices/virtual/graphics/fb0/panel_calibration" "    chown system system /sys/devices/virtual/graphics/fb0/panel_calibration";
 
 # add frandom compatibility
 backup_file ueventd.rc;
