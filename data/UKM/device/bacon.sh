@@ -411,4 +411,7 @@ case "$1" in
 		LivedMsmHotplug)
 			$BB echo "Msm Hotplug Driver"
 	;;
+		LiveSimpleThermal)
+			$BB echo "Simple Thermal Driver"
+	;;
 esac;

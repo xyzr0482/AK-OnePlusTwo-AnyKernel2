@@ -63,4 +63,7 @@ case $1 in
 	MsmHotplug)
 		$BB echo `sh $DEVICE LivedMsmHotplug`;
 	;;
+	SimpleThermal)
+		$BB echo `sh $DEVICE LiveSimpleThermal`;
+	;;
 esac;

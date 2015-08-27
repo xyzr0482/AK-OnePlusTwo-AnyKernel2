@@ -238,6 +238,86 @@ cat << CTAG
 					}},'
 				fi
 			fi`
+			`if [ -f "/sys/kernel/msm_thermal/enabled" ] && [ -f "/sys/kernel/msm_thermal/low_thresh" ]; then
+				SIMPLET=\`$BB cat /sys/kernel/msm_thermal/enabled\`;
+					$BB echo '{ SPane:{
+						title:"Simple Thermal Tunables"
+					}},
+					{ SLiveLabel:{
+						refresh:0,
+						style:italic,
+						action:"live SimpleThermal"
+					}},
+						{ SCheckBox:{
+							label:"Enable",
+							description:"An in kernel replacement for ROM Thermal control. Developed by Sultanxda.",
+							default:'$SIMPLET',
+							action:"generic /sys/kernel/msm_thermal/enabled"
+						}},
+						{ SSpacer:{
+							height: 2
+						}},'
+				if [ -f "/sys/kernel/msm_thermal/sampling_ms" ]; then
+					SIMPLEMS=\`$BB cat /sys/kernel/msm_thermal/sampling_ms\`;
+							$BB echo '{ SSeekBar:{
+								title:"Sampling Rate",
+								description:"Interval between checks of the temperature sensor.",
+								unit:" ms",
+								step:10,
+								min:0,
+								max:30000,
+								default:'$SIMPLEMS',
+								action:"generic /sys/kernel/msm_thermal/sampling_ms"
+							}},'
+				fi
+				if [ -f "/sys/kernel/msm_thermal/user_maxfreq" ]; then
+					$BB echo '{ SSeekBar:{
+						title:"Maxfreq control",
+						description:"Prevents maxfreq overrides from a certain closed-source userspace daemon (0 = Disabled).",
+						default:'\`cat /sys/kernel/msm_thermal/user_maxfreq\`',
+						action:"generic /sys/kernel/msm_thermal/user_maxfreq",
+						values:{ 0:"Disabled", '
+							sh $DEVICE CPUFrequencyList
+						$BB echo '}
+					}},'
+				fi
+				if [ -f "/sys/kernel/msm_thermal/low_thresh" ]; then
+					SIMPLELOW=\`$BB cat /sys/kernel/msm_thermal/low_thresh\`;
+						$BB echo '{ SGeneric:{
+							title:"Low Thresh Zone",
+							description:"Low temperature thermal mitigation. Where First value is the frequency to throttle to in KHz, Second value is the throttle temperature in degrees C, and Third value is the unthrottle temperature in degrees C.",
+							default:'$SIMPLELOW',
+							action:"generic /sys/kernel/msm_thermal/low_thresh",
+						}},
+						{ SSpacer:{
+							height: 2
+						}},'
+				fi
+				if [ -f "/sys/kernel/msm_thermal/mid_thresh" ]; then
+					SIMPLEMID=\`$BB cat /sys/kernel/msm_thermal/mid_thresh\`;
+						$BB echo '{ SGeneric:{
+							title:"Mid Thresh Zone",
+							description:"Mid temperature thermal mitigation. Where First value is the frequency to throttle to in KHz, Second value is the throttle temperature in degrees C, and Third value is the unthrottle temperature in degrees C.",
+							default:'$SIMPLEMID',
+							action:"generic /sys/kernel/msm_thermal/mid_thresh",
+						}},
+						{ SSpacer:{
+							height: 2
+						}},'
+				fi
+				if [ -f "/sys/kernel/msm_thermal/high_thresh" ]; then
+					SIMPLEHIGH=\`$BB cat /sys/kernel/msm_thermal/high_thresh\`;
+						$BB echo '{ SGeneric:{
+							title:"High Thresh Zone",
+							description:"High temperature thermal mitigation. Where First value is the frequency to throttle to in KHz, Second value is the throttle temperature in degrees C, and Third value is the unthrottle temperature in degrees C.",
+							default:'$SIMPLEHIGH',
+							action:"generic /sys/kernel/msm_thermal/high_thresh",
+						}},
+						{ SSpacer:{
+							height: 2
+						}},'
+				fi
+			fi`
 		]
 }
 CTAG
