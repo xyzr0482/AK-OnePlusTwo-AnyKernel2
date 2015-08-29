@@ -189,6 +189,15 @@ replace_line init.qcom-common.rc "write /sys/devices/system/cpu/cpufreq/interact
 #replace_line init.qcom-common.rc "write /sys/module/cpu_boost/parameters/input_boost_freq 1497600" "    write /sys/module/cpu_boost/parameters/input_boost_freq 1728000";
 #replace_line init.qcom-common.rc "write /sys/module/cpu_boost/parameters/input_boost_ms 40" "    write /sys/module/cpu_boost/parameters/input_boost_ms 100";
 
+# add cpu boost tuning if not inside
+insert_line init.qcom-common.rc "# set cpu-boost tunables at boot" after "on property:sys.boot_completed=1" "    write /sys/module/cpu_boost/parameters/boost_ms 20\n";
+insert_line init.qcom-common.rc "# set cpu-boost tunables at boot" after "on property:sys.boot_completed=1" "    write /sys/module/cpu_boost/parameters/sync_threshold 1958400\n";
+insert_line init.qcom-common.rc "# set cpu-boost tunables at boot" after "on property:sys.boot_completed=1" "    write /sys/module/cpu_boost/parameters/input_boost_freq 1728000\n";
+insert_line init.qcom-common.rc "# set cpu-boost tunables at boot" after "on property:sys.boot_completed=1" "    write /sys/module/cpu_boost/parameters/input_boost_ms 40\n";
+insert_line init.qcom-common.rc "# set cpu-boost tunables at boot" after "on property:sys.boot_completed=1" "    write /sys/module/cpu_boost/parameters/load_based_syncs 1\n";
+insert_line init.qcom-common.rc "# set cpu-boost tunables at boot" after "on property:sys.boot_completed=1" "    write /sys/module/cpu_boost/parameters/migration_load_threshold 20\n";
+insert_line init.qcom-common.rc "# set cpu-boost tunables at boot" after "on property:sys.boot_completed=1" "    # set cpu-boost tunables at boot\n"
+
 # panel and gamma
 #replace_line init.qcom-common.rc "chown system graphics /sys/devices/virtual/graphics/fb0/panel_calibration" "    chown system system /sys/devices/virtual/graphics/fb0/panel_calibration";
 
