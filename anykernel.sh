@@ -198,6 +198,11 @@ insert_line init.qcom-common.rc "# set cpu-boost tunables at boot" after "on pro
 insert_line init.qcom-common.rc "# set cpu-boost tunables at boot" after "on property:sys.boot_completed=1" "    write /sys/module/cpu_boost/parameters/migration_load_threshold 20\n";
 insert_line init.qcom-common.rc "# set cpu-boost tunables at boot" after "on property:sys.boot_completed=1" "    # set cpu-boost tunables at boot\n"
 
+# add simple thermal tuning
+replace_line init.qcom-common.rc "write /sys/kernel/msm_thermal/low_thresh \"1574400 40 37\"" "    write /sys/kernel/msm_thermal/low_thresh \"1728000 46 42\"";
+replace_line init.qcom-common.rc "write /sys/kernel/msm_thermal/mid_thresh \"1267200 46 43\"" "    write /sys/kernel/msm_thermal/mid_thresh \"1574400 52 48\"";
+replace_line init.qcom-common.rc "write /sys/kernel/msm_thermal/high_thresh \"1190400 52 48\"" "    write /sys/kernel/msm_thermal/high_thresh \"1267200 58 54\"";
+
 # panel and gamma
 #replace_line init.qcom-common.rc "chown system graphics /sys/devices/virtual/graphics/fb0/panel_calibration" "    chown system system /sys/devices/virtual/graphics/fb0/panel_calibration";
 
