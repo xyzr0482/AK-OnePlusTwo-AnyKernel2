@@ -43,15 +43,9 @@ ifelse(file_getprop("/tmp/anykernel/anykernel.sh", "do.cleanup") == 1,
   )
 );
 ui_print("Deleting trash files left by other kernels...");
-delete("/system/etc/init.d/01mpdecision");
-delete("/system/etc/init.d/00tgm");
-delete("/system/etc/init.d/00RenderKernel");
-delete("/sbin/boeffla-init.sh");
-delete("/sbin/render-post_boot.sh");
-delete("/system/etc/init.d/00ak");
 unmount("/system");
-ui_print(" ");
 
+ui_print("");
 ui_print("***********************************************");
 ui_print("*               Welcome to the                *");
 ui_print("*          Universal Kernel Manager           *");
@@ -99,4 +93,4 @@ set_progress(1.000000);
 ui_print("****************************************");
 ui_print("*          Install Complete!           *");
 ui_print("****************************************");
-
+ui_print("");
