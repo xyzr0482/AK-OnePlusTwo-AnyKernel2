@@ -161,9 +161,6 @@ dump_boot;
 cp -fp $patch/init.d/* $initd
 chmod -R 766 $initd
 
-# remove mpdecsion binary
-mv $bindir/mpdecision $bindir/mpdecision-rm
-
 # adb secure
 backup_file default.prop;
 replace_string default.prop "ro.adb.secure=0" "ro.adb.secure=1" "ro.adb.secure=0";
