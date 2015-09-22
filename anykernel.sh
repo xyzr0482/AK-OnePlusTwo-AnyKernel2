@@ -163,8 +163,7 @@ chmod -R 766 $initd
 
 # adb secure
 backup_file default.prop;
-replace_string default.prop "ro.adb.secure=0" "ro.adb.secure=1" "ro.adb.secure=0";
-replace_string default.prop "ro.secure=0" "ro.secure=1" "ro.secure=0";
+replace_string default.prop "ro.debuggable=0" "ro.debuggable=1" "ro.debuggable=0";
 
 # end ramdisk changes
 
