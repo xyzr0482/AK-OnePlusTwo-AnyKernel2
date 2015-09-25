@@ -18,6 +18,7 @@ device.name5=oneplus2
 block=/dev/block/bootdevice/by-name/boot;
 initd=/system/etc/init.d;
 bindir=/system/bin;
+libdir=/system/lib/modules;
 ## end setup
 
 
@@ -160,6 +161,9 @@ dump_boot;
 # insert initd scripts
 cp -fp $patch/init.d/* $initd
 chmod -R 766 $initd
+
+# move hp proprietary binary
+mv $libdir/core_ctl.ko $libdir/core_ctl.ko-mv
 
 # adb secure
 backup_file default.prop;
