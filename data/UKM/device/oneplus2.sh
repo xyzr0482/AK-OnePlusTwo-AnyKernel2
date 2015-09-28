@@ -391,7 +391,7 @@ case "$1" in
 		fi;
 	;;
 		LiveCpuPvsLevel)
-			$BB echo "Pvs Bin: `$BB cat /sys/module/clock_krait_8974/parameters/pvs_level`@nSpeed Bin: `$BB cat /sys/module/clock_krait_8974/parameters/speed_level`"
+			$BB echo "Speedbin A53: `$BB cat /sys/module/clock_cpu_8994/parameters/a53speedbin`@nSpeedbin A57: `$BB cat /sys/module/clock_cpu_8994/parameters/a57speedbin`"
 	;;
 		LiveChargeCurrent)
 			$BB echo "mA: `$BB cat /sys/kernel/charge_levels/charge_info`"
