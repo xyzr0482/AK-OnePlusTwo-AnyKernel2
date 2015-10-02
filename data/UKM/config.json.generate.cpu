@@ -451,25 +451,46 @@ cat << CTAG
 							}},'
 						fi;
 					fi;
-					if [ -f "/sys/module/cpu_boost/parameters/load_based_syncs" ]; then
-					LBS=\`bool /sys/module/cpu_boost/parameters/load_based_syncs\`
-						$BB echo '{ SCheckBox:{
-							label:"Load Based Syncs",
-							description:"",
-							default:'$LBS',
-							action:"boolean /sys/module/cpu_boost/parameters/load_based_syncs",
-						}},'
-					fi
 					if [ -f "/sys/module/cpu_boost/parameters/migration_load_threshold" ]; then
 					MLT=\`$BB cat /sys/module/cpu_boost/parameters/migration_load_threshold\`
 						$BB echo '{ SSeekBar:{
 								title:"Migration Load Threshold",
-								description:"",
+								description:"The amount of load before migrate tasks to another cpu.",
 								min:0,
 								max:100,
 								step:1,
 								default:'$MLT',
 								action:"generic /sys/module/cpu_boost/parameters/migration_load_threshold"
+						}},'
+					fi
+					if [ -f "/sys/module/cpu_boost/parameters/load_based_syncs" ]; then
+					LBS=\`bool /sys/module/cpu_boost/parameters/load_based_syncs\`
+						$BB echo '{ SCheckBox:{
+							label:"Load Based Syncs",
+							description:"The cpu boost driver can use this load to compute a suitable frequency for the migrating task.",
+							default:'$LBS',
+							action:"boolean /sys/module/cpu_boost/parameters/load_based_syncs",
+						}},'
+					fi
+					if [ -f "/sys/module/cpu_boost/parameters/sched_boost_on_input" ]; then
+					SBOI=\`bool /sys/module/cpu_boost/parameters/sched_boost_on_input\`
+						$BB echo '{ SCheckBox:{
+							label:"Scheduler Boost on Input",
+							description:"Enable scheduler boost to migrate tasks to big cluster.",
+							default:'$SBOI',
+							action:"boolean /sys/module/cpu_boost/parameters/sched_boost_on_input",
+						}},'
+					fi
+					$BB echo '{ SSpacer:{
+						height: 1
+					}},'
+					if [ -f "/sys/module/cpu_boost/parameters/sysctl_thermal_aware_scheduling" ]; then
+					STAS=\`bool /sys/module/cpu_boost/parameters/sysctl_thermal_aware_scheduling\`
+						$BB echo '{ SGeneric:{
+							title:"Thermal Aware Scheduling",
+							description:"Balancing the workloads between both the bigger and smaller cores within the SoC regardless of the thermal conditions.",
+							default:'$STAS',
+							action:"generic /sys/module/cpu_boost/parameters/sysctl_thermal_aware_scheduling",
 						}},'
 					fi
 					if [ -f "/sys/module/cpu_boost/parameters/hotplug_boost" ]; then
