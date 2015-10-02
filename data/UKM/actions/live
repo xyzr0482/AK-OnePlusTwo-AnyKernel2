@@ -24,8 +24,11 @@ case $1 in
 	Memory)
 		$BB echo `sh $DEVICE LiveMemory`;
 	;;
-	Time)
-		$BB echo `sh $DEVICE LiveTime $2 $3`;
+	TimeA53)
+		$BB echo "A53 Little Core@n`sh $DEVICE LiveTimeA53 $2 $3`";
+	;;
+	TimeA57)
+		$BB echo ""A57 Big Core@n`sh $DEVICE LiveTimeA57 $2 $3`;
 	;;
 	TimeGpu)
 		$BB echo `sh $DEVICE LiveTimeGpu $2 $3`;
@@ -33,8 +36,11 @@ case $1 in
 	UpTime)
 		$BB echo `sh $DEVICE LiveUpTime`;
 	;;
-	UnUsed)
-		$BB echo `sh $DEVICE LiveUnUsed`;
+	UnUsedA53)
+		$BB echo -e "A53 Little Core@n`sh $DEVICE LiveUnUsedA53`";
+	;;
+	UnUsedA57)
+		$BB echo -e "A57 Big Core@n`sh $DEVICE LiveUnUsedA57`";
 	;;
 	UnUsedGpu)
 		$BB echo `sh $DEVICE LiveUnUsedGpu`;

@@ -194,11 +194,11 @@ case "$1" in
 		FREE="$((FREE + CACHED)) MB";
 		$BB echo "Total: $TOTAL@nFree: $FREE";
 	;;
-	LiveTime)
+	LiveTimeA53)
 		STATE="";
 		CNT=0;
 		SUM=`$BB awk '{s+=$2} END {print s}' /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state`;
-		
+
 		while read FREQ TIME; do
 			if [ "$CNT" -ge $2 ] && [ "$CNT" -le $3 ]; then
 				FREQ="$((FREQ / 1000)) MHz:";
@@ -211,7 +211,28 @@ case "$1" in
 			fi;
 			CNT=$((CNT+1));
 		done < /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state;
-		
+
+		STATE=${STATE%??};
+		$BB echo "$STATE";
+	;;
+	LiveTimeA57)
+		STATE="";
+		CNT=0;
+		SUM=`$BB awk '{s+=$2} END {print s}' /sys/devices/system/cpu/cpu4/cpufreq/stats/time_in_state`;
+
+		while read FREQ TIME; do
+			if [ "$CNT" -ge $2 ] && [ "$CNT" -le $3 ]; then
+				FREQ="$((FREQ / 1000)) MHz:";
+				if [ $TIME -ge "100" ]; then
+					PERC=`$BB awk "BEGIN { print ( ($TIME / $SUM) * 100) }"`;
+					PERC="`$BB printf "%0.1f\n" $PERC`%";
+					TIME=$((TIME / 100));
+					STATE="$STATE $FREQ `$BB echo - | $BB awk -v "S=$TIME" '{printf "%dh:%dm:%ds",S/(60*60),S%(60*60)/60,S%60}'` ($PERC)@n";
+				fi;
+			fi;
+			CNT=$((CNT+1));
+		done < /sys/devices/system/cpu/cpu4/cpufreq/stats/time_in_state;
+
 		STATE=${STATE%??};
 		$BB echo "$STATE";
 	;;
@@ -251,15 +272,37 @@ case "$1" in
 		SLEEP=`$BB echo - | $BB awk -v "S=$SLEEP" '{printf "%dh:%dm:%ds",S/(60*60),S%(60*60)/60,S%60}'`;
 		$BB echo "Total: $TOTAL (100.0%)@nSleep: $SLEEP ($PERC_S)@nAwake: $AWAKE ($PERC_A)";
 	;;
-	LiveUnUsed)
+	LiveUnUsedA53)
 		UNUSED="";
 		while read FREQ TIME; do
 			FREQ="$((FREQ / 1000)) MHz";
 			if [ $TIME -lt "100" ]; then
 				UNUSED="$UNUSED$FREQ, ";
+			else
+				ALLUSED="NONE";
 			fi;
 		done < /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state;
+
+		if [ -z "$UNUSED" ]; then
+			$BB echo "$ALLUSED";
+		fi;
+		UNUSED=${UNUSED%??};
+		$BB echo "$UNUSED";
+	;;
+	LiveUnUsedA57)
+		UNUSED="";
+		while read FREQ TIME; do
+			FREQ="$((FREQ / 1000)) MHz";
+			if [ $TIME -lt "100" ]; then
+				UNUSED="$UNUSED$FREQ, ";
+			else
+				ALLUSED="NONE";
+			fi;
+		done < /sys/devices/system/cpu/cpu4/cpufreq/stats/time_in_state;
 		
+		if [ -z "$UNUSED" ]; then
+			$BB echo "$ALLUSED";
+		fi;
 		UNUSED=${UNUSED%??};
 		$BB echo "$UNUSED";
 	;;

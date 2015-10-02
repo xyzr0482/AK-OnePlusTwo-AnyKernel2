@@ -3,7 +3,7 @@ cat << CTAG
 	name:STATUS,
 		elements:[
 			{ SPane:{
-				title:"CPU PVS/SPEED Level:"
+				title:"Cpu Speedbin Level:"
 			}},
 				{ SLiveLabel:{
 					refresh:10000,
@@ -48,7 +48,12 @@ cat << CTAG
 				{ SLiveLabel:{
 					refresh:0,
 					style:italic,
-					action:"live UnUsed"
+					action:"live UnUsedA53"
+				}},
+				{ SLiveLabel:{
+					refresh:0,
+					style:italic,
+					action:"live UnUsedA57"
 				}},
 			{ SPane:{
 				title:"Time in States:"
@@ -56,17 +61,12 @@ cat << CTAG
 				{ SLiveLabel:{
 					refresh:0,
 					style:italic,
-					action:"live Time 0 9"
+					action:"live TimeA53 0 11"
 				}},
 				{ SLiveLabel:{
 					refresh:0,
 					style:italic,
-					action:"live Time 10 19"
-				}},
-				{ SLiveLabel:{
-					refresh:0,
-					style:italic,
-					action:"live Time 20 29"
+					action:"live TimeA57 0 11"
 				}},
 			`if [ -f "/proc/wakelocks" ]; then
 				$BB echo '{ SPane:{
