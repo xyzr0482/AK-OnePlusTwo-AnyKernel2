@@ -72,4 +72,7 @@ case $1 in
 	SimpleThermal)
 		$BB echo `sh $DEVICE LiveSimpleThermal`;
 	;;
+	CpuBoost)
+		$BB echo `sh $DEVICE LiveCpuBoost`;
+	;;
 esac;

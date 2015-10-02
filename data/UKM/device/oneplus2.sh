@@ -457,4 +457,7 @@ case "$1" in
 		LiveSimpleThermal)
 			$BB echo "Simple Thermal Driver"
 	;;
+	LiveCpuBoost)
+			$BB echo "CPU Boost Driver"
+	;;
 esac;
