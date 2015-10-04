@@ -10,6 +10,18 @@ case "$1" in
 			$BB echo "$CPUFREQ:\"${LABEL} MHz\", ";
 		done;
 	;;
+	CPUFrequencyListA53)
+		for CPUFREQ in `$BB cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_frequencies`; do
+		LABEL=$((CPUFREQ / 1000));
+			$BB echo "$CPUFREQ:\"${LABEL} MHz\", ";
+		done;
+	;;
+	CPUFrequencyListA57)
+		for CPUFREQ in `$BB cat /sys/devices/system/cpu/cpu4/cpufreq/scaling_available_frequencies`; do
+		LABEL=$((CPUFREQ / 1000));
+			$BB echo "$CPUFREQ:\"${LABEL} MHz\", ";
+		done;
+	;;
 	CPUGovernorList)
 		for CPUGOV in `$BB cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_available_governors`; do
 			$BB echo "\"$CPUGOV\",";
@@ -20,21 +32,61 @@ case "$1" in
 	;;
 	DefaultCPUMaxFrequency)
 		while read FREQ TIME; do
-			if [ $FREQ -le "2260000" ]; then
+			if [ $FREQ -le "2456000" ]; then
 				MAXCPU=$FREQ;
 			fi;
 		done < /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state;
 
 		$BB echo $MAXCPU;
 	;;
+	DefaultCPUMaxFrequencyA53)
+		while read FREQ TIME; do
+			if [ $FREQ -le "1555200" ]; then
+				MAXCPU=$FREQ;
+			fi;
+		done < /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state;
+
+		$BB echo $MAXCPU;
+	;;
+	DefaultCPUMaxFrequencyA57)
+		while read FREQ TIME; do
+			if [ $FREQ -le "1766400" ]; then
+				MAXCPU=$FREQ;
+			fi;
+		done < /sys/devices/system/cpu/cpu4/cpufreq/stats/time_in_state;
+
+		$BB echo $MAXCPU;
+	;;
 	DefaultCPUMinFrequency)
 		S=0;
 		while read FREQ TIME; do
-			if [ $FREQ -ge "300000" ] && [ $S -eq "0" ]; then
+			if [ $FREQ -ge "384000" ] && [ $S -eq "0" ]; then
 				S=1;
 				MINCPU=$FREQ;
 			fi;
 		done < /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state;
+
+		$BB echo $MINCPU;
+	;;
+	DefaultCPUMinFrequencyA53)
+		S=0;
+		while read FREQ TIME; do
+			if [ $FREQ -ge "384000" ] && [ $S -eq "0" ]; then
+				S=1;
+				MINCPU=$FREQ;
+			fi;
+		done < /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state;
+
+		$BB echo $MINCPU;
+	;;
+	DefaultCPUMinFrequencyA57)
+		S=0;
+		while read FREQ TIME; do
+			if [ $FREQ -ge "384000" ] && [ $S -eq "0" ]; then
+				S=1;
+				MINCPU=$FREQ;
+			fi;
+		done < /sys/devices/system/cpu/cpu4/cpufreq/stats/time_in_state;
 
 		$BB echo $MINCPU;
 	;;
@@ -53,8 +105,20 @@ case "$1" in
 	DirCPUMaxFrequency)
 		$BB echo "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq";
 	;;
+	DirCPUMaxFrequencyA53)
+		$BB echo "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq";
+	;;
+	DirCPUMaxFrequencyA57)
+		$BB echo "/sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq";
+	;;
 	DirCPUMinFrequency)
 		$BB echo "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq";
+	;;
+	DirCPUMinFrequencyA53)
+		$BB echo "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq";
+	;;
+	DirCPUMinFrequencyA57)
+		$BB echo "/sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq";
 	;;
 	DirGPUGovernor)
 		$BB echo "/sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/governor";
@@ -366,8 +430,32 @@ case "$1" in
 			$BB echo $2 > $CPU/cpufreq/scaling_max_freq 2> /dev/null;
 		done;
 	;;
+	SetCPUMaxFrequencyA53)
+		for CPU in /sys/devices/system/cpu/cpu[0-3]; do
+			$BB echo 1 > $CPU/online 2> /dev/null;
+			$BB echo $2 > $CPU/cpufreq/scaling_max_freq 2> /dev/null;
+		done;
+	;;
+	SetCPUMaxFrequencyA57)
+		for CPU in /sys/devices/system/cpu/cpu[4-7]; do
+			$BB echo 1 > $CPU/online 2> /dev/null;
+			$BB echo $2 > $CPU/cpufreq/scaling_max_freq 2> /dev/null;
+		done;
+	;;
 	SetCPUMinFrequency)
 		for CPU in /sys/devices/system/cpu/cpu[1-3]; do
+			$BB echo 1 > $CPU/online 2> /dev/null;
+			$BB echo $2 > $CPU/cpufreq/scaling_min_freq 2> /dev/null;
+		done;
+	;;
+	SetCPUMinFrequencyA53)
+		for CPU in /sys/devices/system/cpu/cpu[0-3]; do
+			$BB echo 1 > $CPU/online 2> /dev/null;
+			$BB echo $2 > $CPU/cpufreq/scaling_min_freq 2> /dev/null;
+		done;
+	;;
+	SetCPUMinFrequencyA57)
+		for CPU in /sys/devices/system/cpu/cpu[4-7]; do
 			$BB echo 1 > $CPU/online 2> /dev/null;
 			$BB echo $2 > $CPU/cpufreq/scaling_min_freq 2> /dev/null;
 		done;
@@ -435,6 +523,9 @@ case "$1" in
 	;;
 		LiveCpuPvsLevel)
 			$BB echo "Speedbin A53: `$BB cat /sys/module/clock_cpu_8994/parameters/a53speedbin`@nSpeedbin A57: `$BB cat /sys/module/clock_cpu_8994/parameters/a57speedbin`"
+	;;
+		LiveCPUScalingA53)
+			$BB echo "A53 Min Freq: `$BB cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq`@nA53 Max Freq: `$BB cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq`"
 	;;
 		LiveChargeCurrent)
 			$BB echo "mA: `$BB cat /sys/kernel/charge_levels/charge_info`"

@@ -12,6 +12,9 @@ case $1 in
 	CPUFrequency)
 		$BB echo `sh $DEVICE LiveCPUFrequency`;
 	;;
+	CPUScalingA53)
+		$BB echo `sh $DEVICE LiveCPUScalingA53`;
+	;;
 	CPUTemperature)
 		$BB echo `sh $DEVICE LiveCPUTemperature`;
 	;;
