@@ -82,7 +82,7 @@ case "$1" in
 				MINCPU=$FREQ;
 			fi;
 		done < /sys/devices/system/cpu/cpu0/cpufreq/stats/time_in_state;
-
+		
 		$BB echo $MINCPU;
 	;;
 	DefaultCPUMinFrequencyA57)
