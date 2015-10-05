@@ -28,10 +28,10 @@ case $1 in
 		$BB echo `sh $DEVICE LiveMemory`;
 	;;
 	TimeA53)
-		$BB echo "A53 Little Core@n`sh $DEVICE LiveTimeA53 $2 $3`";
+		$BB echo `sh $DEVICE LiveTimeA53 $2 $3`;
 	;;
 	TimeA57)
-		$BB echo ""A57 Big Core@n`sh $DEVICE LiveTimeA57 $2 $3`;
+		$BB echo `sh $DEVICE LiveTimeA57 $2 $3`;
 	;;
 	TimeGpu)
 		$BB echo `sh $DEVICE LiveTimeGpu $2 $3`;
