@@ -97,7 +97,7 @@ case "$1" in
 		$BB echo $MINCPU;
 	;;
 	DefaultGPUGovernor)
-		$BB echo "`$BB cat /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/governor`"
+		$BB echo "`$BB cat /sys/devices/soc.0/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/governor`"
 	;;
 	DirKernelIMG)
 		$BB echo "/dev/block/platform/msm_sdcc.1/by-name/aboot";
@@ -139,13 +139,13 @@ case "$1" in
 		$BB echo "/sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq";
 	;;
 	DirGPUGovernor)
-		$BB echo "/sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/governor";
+		$BB echo "/sys/devices/soc.0/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/governor";
 	;;
 	DirGPUMaxFrequency)
-		$BB echo "/sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/max_freq";
+		$BB echo "/sys/devices/soc.0/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/max_freq";
 	;;
 	DirGPUMinPwrLevel)
-		$BB echo "/sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/min_freq";
+		$BB echo "/sys/devices/soc.0/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/min_freq";
 	;;
 	#DirGPUNumPwrLevels)
 	#	$BB echo "/sys/class/kgsl/kgsl-3d0/num_pwrlevels";
@@ -163,7 +163,7 @@ case "$1" in
 		$BB echo "/proc/sys/net/ipv4/tcp_congestion_control";
 	;;
 	GPUFrequencyList)
-		for GPUFREQ in `$BB cat /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/available_frequencies | $BB tr ' ' '\n' | $BB sort -u` ; do
+		for GPUFREQ in `$BB cat /sys/devices/soc.0/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/available_frequencies | $BB tr ' ' '\n' | $BB sort -u` ; do
 		LABEL=$((GPUFREQ / 1000000));
 			$BB echo "$GPUFREQ:\"${LABEL} MHz\", ";
 		done;
@@ -172,7 +172,7 @@ case "$1" in
 		$BB echo "msm-adreno-tz","performance";
 	;;
 	GPUPowerLevel)
-		for GPUFREQ in `$BB cat /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/available_frequencies | $BB tr ' ' '\n' | $BB sort -u` ; do
+		for GPUFREQ in `$BB cat /sys/devices/soc.0/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/available_frequencies | $BB tr ' ' '\n' | $BB sort -u` ; do
 		LABEL=$((GPUFREQ / 1000000));
 			$BB echo "$GPUFREQ:\"${LABEL} MHz\", ";
 		done;
@@ -253,7 +253,7 @@ case "$1" in
 		$BB echo "$CPU_C°C | $CPU_F°F";
 	;;
 	LiveGPUFrequency)
-		GPUCURFREQ=/sys/devices/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/gpuclk;
+		GPUCURFREQ=/sys/devices/soc.0/fdb00000.qcom,kgsl-3d0/kgsl/kgsl-3d0/gpuclk;
 		
 		if [ -f "$GPUCURFREQ" ]; then
 			GPUFREQ="$((`$BB cat $GPUCURFREQ` / 1000000)) MHz";
@@ -272,7 +272,7 @@ case "$1" in
 				FREE=$((MEM / 1024));
 			fi;
 		done < /proc/meminfo;
-		
+
 		FREE="$((FREE + CACHED)) MB";
 		$BB echo "Total: $TOTAL@nFree: $FREE";
 	;;
@@ -321,7 +321,7 @@ case "$1" in
 	LiveTimeGpu)
 		STATE="";
 		CNT=0;
-		SUM=`$BB awk '{s+=$2} END {print s}' /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/time_in_state`;
+		SUM=`$BB awk '{s+=$2} END {print s}' /sys/devices/soc.0/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/time_in_state`;
 
 		while read FREQ TIME; do
 			if [ "$CNT" -ge $2 ] && [ "$CNT" -le $3 ]; then
@@ -334,7 +334,7 @@ case "$1" in
 				fi;
 			fi;
 			CNT=$((CNT+1));
-		done < /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/time_in_state;
+		done < /sys/devices/soc.0/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/time_in_state;
 
 		STATE=${STATE%??};
 		$BB echo "$STATE";
@@ -395,7 +395,7 @@ case "$1" in
 			if [ $TIME -lt "1000" ]; then
 				UNUSED="$UNUSED$FREQ, ";
 			fi;
-		done < /sys/devices/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/time_in_state;
+		done < /sys/devices/soc.0/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/time_in_state;
 
 		UNUSED=${UNUSED%??};
 		$BB echo "$UNUSED";
