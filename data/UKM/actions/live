@@ -78,4 +78,10 @@ case $1 in
 	CpuBoost)
 		$BB echo `sh $DEVICE LiveCpuBoost`;
 	;;
+	CpuClusterA53)
+		$BB echo `sh $DEVICE LiveCpuClusterA53`;
+	;;
+	CpuClusterA57)
+		$BB echo `sh $DEVICE LiveCpuClusterA57`;
+	;;
 esac;

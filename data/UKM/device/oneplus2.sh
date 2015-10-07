@@ -124,19 +124,19 @@ case "$1" in
 		$BB echo "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq";
 	;;
 	DirCPUMaxFrequencyA53)
-		$BB echo "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq";
+		$BB echo "/sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq_hardlimit";
 	;;
 	DirCPUMaxFrequencyA57)
-		$BB echo "/sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq";
+		$BB echo "/sys/devices/system/cpu/cpu4/cpufreq/scaling_max_freq_hardlimit";
 	;;
 	DirCPUMinFrequency)
 		$BB echo "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq";
 	;;
 	DirCPUMinFrequencyA53)
-		$BB echo "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq";
+		$BB echo "/sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq_hardlimit";
 	;;
 	DirCPUMinFrequencyA57)
-		$BB echo "/sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq";
+		$BB echo "/sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq_hardlimit";
 	;;
 	DirGPUGovernor)
 		$BB echo "/sys/devices/soc.0/fdb00000.qcom,kgsl-3d0/devfreq/fdb00000.qcom,kgsl-3d0/governor";
@@ -552,7 +552,7 @@ case "$1" in
 			$BB echo "`$BB uname -r`"
 	;;
 		LiveInfoCurrent)
-			$BB echo "Version: 4.0.0.0 Special Edition"
+			$BB echo "Version: 3.8.4.0 Special Edition"
 	;;
 		LiveBrickedHotplug)
 			$BB echo "Bricked Hotplug Driver"
@@ -568,5 +568,11 @@ case "$1" in
 	;;
 	LiveCpuBoost)
 			$BB echo "CPU Boost Driver"
+	;;
+	LiveCpuClusterA53)
+			$BB echo "A53 Cluster"
+	;;
+	LiveCpuClusterA57)
+			$BB echo "A57 Cluster"
 	;;
 esac;
