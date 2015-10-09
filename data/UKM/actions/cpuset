@@ -10,7 +10,11 @@ if [ -f $1 ]; then
 		$BB echo $2 > $1 2> /dev/null;
 		
 		$BB test "$1" = "`sh $DEVICE DirCPUMinFrequency`" && sh $DEVICE SetCPUMinFrequency $2 2> /dev/null;
+		$BB test "$1" = "`sh $DEVICE DirCPUMinFrequencyA53`" && sh $DEVICE SetCPUMinFrequencyA53 $2 2> /dev/null;
+		$BB test "$1" = "`sh $DEVICE DirCPUMinFrequencyA57`" && sh $DEVICE SetCPUMinFrequencyA57 $2 2> /dev/null;
 		$BB test "$1" = "`sh $DEVICE DirCPUMaxFrequency`" && sh $DEVICE SetCPUMaxFrequency $2 2> /dev/null;
+		$BB test "$1" = "`sh $DEVICE DirCPUMaxFrequencyA53`" && sh $DEVICE SetCPUMaxFrequencyA53 $2 2> /dev/null;
+		$BB test "$1" = "`sh $DEVICE DirCPUMaxFrequencyA57`" && sh $DEVICE SetCPUMaxFrequencyA57 $2 2> /dev/null;
 		$BB test "$1" = "`sh $DEVICE DirCPUGovernor`" && sh $DEVICE SetCPUGovernor $2 2> /dev/null;
 	fi;
 
