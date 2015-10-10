@@ -84,4 +84,7 @@ case $1 in
 	CpuClusterA57)
 		$BB echo `sh $DEVICE LiveCpuClusterA57`;
 	;;
+	StateNotifier)
+		$BB echo `sh $DEVICE LiveStateNotifier`;
+	;;
 esac;

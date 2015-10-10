@@ -575,4 +575,7 @@ case "$1" in
 	LiveCpuClusterA57)
 			$BB echo "A57 Cluster"
 	;;
+	LiveStateNotifier)
+			$BB echo "State Notifier Driver"
+	;;
 esac;
